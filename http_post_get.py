@@ -1,21 +1,25 @@
 import urllib.request, ssl
-import re, sqlite3, time
-import socket
+import re, sqlite3, time, sys, socket
 import socks	# pip install pysocks
-import sys
+
+
+user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+request_timeout = 5
+error_retry = 99
 
 def http_get(hyperlink):
 	#ssl._create_default_https_context = ssl._create_unverified_context
 	ctx = ssl.create_default_context()
 	ctx.check_hostname = False
 	ctx.verify_mode = ssl.CERT_NONE
-	for i in range(999):
+	for i in range(error_retry):
 		try:
-			response = urllib.request.urlopen(hyperlink, context=ctx)
+			req = urllib.request.Request(hyperlink, headers={'User-Agent': user_agent}, data=None)
+			response = urllib.request.urlopen(req, context=ctx, timeout=request_timeout)
 			return response.read().decode('utf-8')
-		except urllib.error.HTTPError as e:
-			#eprint(e.reason)
-			eprint('error: http_get()')
+		#except (urllib.error.HTTPError, urllib.error.URLError) as e:
+		except Exception as e:
+			sys.stderr.write('error: http_get()\n')
 			time.sleep(2)
 
 # params: {'key1':'val1','key2':'val2'}
@@ -24,15 +28,16 @@ def http_post(hyperlink, params):
 	ctx = ssl.create_default_context()
 	ctx.check_hostname = False
 	ctx.verify_mode = ssl.CERT_NONE
-	for i in range(999):
+	for i in range(error_retry):
 		try:
-			req = urllib.request.Request(hyperlink, data=urllib.parse.urlencode(params).encode() )
-			response = urllib.request.urlopen(req, context=ctx)
+			req = urllib.request.Request(hyperlink, headers={'User-Agent': user_agent}, data=urllib.parse.urlencode(params).encode() )
+			response = urllib.request.urlopen(req, context=ctx, timeout=request_timeout)
 			return response.read().decode('utf-8')
-		except urllib.error.HTTPError as e:
-			#eprint(e.reason)
-			eprint('error: http_post()')
+		#except (urllib.error.HTTPError, urllib.error.URLError) as e:
+		except Exception as e:
+			sys.stderr.write('error: http_post()\n')
 			time.sleep(2)
+
 
 
 
@@ -45,9 +50,8 @@ def http_post(hyperlink, params):
 #socket.socket = socks.socksocket
 
 data = {
-	'a':'111',
-	'b':'222',
-	'c':'333',
+	'param1':'value1',
+	'param2':'value2',
 }
 
 #text_res = http_post('https://test.com/search.php', data)
@@ -60,14 +64,7 @@ print(text_res)
 
 
 
-'''
 
-
-
-
-
-
-'''
 
 
 
