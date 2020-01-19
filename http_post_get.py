@@ -3,19 +3,19 @@ import re, sqlite3, time, sys, socket
 import socks	# pip install pysocks
 
 
-user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-request_timeout = 5
-error_retry = 99
+USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+REQUEST_TIMEOUT = 5
+ERROR_RETRY = 99
 
 def http_get(hyperlink):
 	#ssl._create_default_https_context = ssl._create_unverified_context
 	ctx = ssl.create_default_context()
 	ctx.check_hostname = False
 	ctx.verify_mode = ssl.CERT_NONE
-	for i in range(error_retry):
+	for i in range(ERROR_RETRY):
 		try:
-			req = urllib.request.Request(hyperlink, headers={'User-Agent': user_agent}, data=None)
-			response = urllib.request.urlopen(req, context=ctx, timeout=request_timeout)
+			req = urllib.request.Request(hyperlink, headers={'User-Agent': USER_AGENT}, data=None)
+			response = urllib.request.urlopen(req, context=ctx, timeout=REQUEST_TIMEOUT)
 			return response.read().decode('utf-8')
 		#except (urllib.error.HTTPError, urllib.error.URLError) as e:
 		except Exception as e:
@@ -28,10 +28,10 @@ def http_post(hyperlink, params):
 	ctx = ssl.create_default_context()
 	ctx.check_hostname = False
 	ctx.verify_mode = ssl.CERT_NONE
-	for i in range(error_retry):
+	for i in range(ERROR_RETRY):
 		try:
-			req = urllib.request.Request(hyperlink, headers={'User-Agent': user_agent}, data=urllib.parse.urlencode(params).encode() )
-			response = urllib.request.urlopen(req, context=ctx, timeout=request_timeout)
+			req = urllib.request.Request(hyperlink, headers={'User-Agent': USER_AGENT}, data=urllib.parse.urlencode(params).encode() )
+			response = urllib.request.urlopen(req, context=ctx, timeout=REQUEST_TIMEOUT)
 			return response.read().decode('utf-8')
 		#except (urllib.error.HTTPError, urllib.error.URLError) as e:
 		except Exception as e:
