@@ -52,6 +52,7 @@ def http_post (hyperlink, params):
 ### MAIN ###
 ############
 
+#import http_post_get as crawler
 
 #socks.set_default_proxy(socks.SOCKS5, "127.0.0.1", 9150)
 #socket.socket = socks.socksocket
@@ -61,11 +62,11 @@ def http_post (hyperlink, params):
 #	'param2':'value2',
 #}
 
-#text_res = http_post('https://test.com/search.php', data)
+#text_res = crawler.http_post('https://test.com/search.php', data)
 #print(text_res)
 
 
-#text_res = http_get('http://bing.com')
+#text_res = crawler.http_get('http://bing.com')
 #print(text_res)
 
 
