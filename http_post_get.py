@@ -71,37 +71,4 @@ def http_post (hyperlink, params):
 
 
 
-############################
-
-
-text_res = http_get('https://forlap.ristekdikti.go.id/mahasiswa')
-m1 = re.findall(r'<input type="hidden" name="captcha_value_1" value="(\d*?)">\r\n\s*?<input type="hidden" name="captcha_value_2" value="(\d*?)">'
-		, text_res, re.MULTILINE | re.IGNORECASE | re.DOTALL)
-if m1:
-	for arr in m1:
-		captcha1, captcha2 = int(arr[0]), int(arr[1])
-		#print(arr, captcha1 + captcha2)
-
-data = {
-	"dummy":"031038+++Universitas+Bina+Nusantara",
-	"id_sp":"6C91755E-50E5-4ACF-B454-37A058BA9BCB",
-	"id_sms":"CA5901CA-D995-4A47-9D33-B46100A3E129",
-	"keyword":"1000881",
-	"kode_pengaman":19,
-	"captcha_value_1":10,
-	"captcha_value_2":9
-}
-
-'''
-"kode_pengaman":captcha1+captcha2,
-"captcha_value_1":captcha1,
-"captcha_value_2":captcha2
-'''
-
-#text_res2 = http_post('https://forlap.ristekdikti.go.id/mahasiswa/search', data)
-text_res = http_post('https://forlap.ristekdikti.go.id/mahasiswa/search', data)
-print(text_res)
-
-
-
 
