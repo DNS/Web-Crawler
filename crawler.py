@@ -52,7 +52,7 @@ def http_post (hyperlink, params):
 ### MAIN ###
 ############
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
 	#socks.set_default_proxy(socks.SOCKS5, "127.0.0.1", 9150)
 	#socket.socket = socks.socksocket
 
