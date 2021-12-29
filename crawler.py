@@ -53,7 +53,7 @@ def http_post (hyperlink, params):
 ############
 
 #if __name__ == "__main__":
-	#socks.set_default_proxy(socks.SOCKS5, "127.0.0.1", 9150)
+	#socks.set_default_proxy(proxy_type=socks.SOCKS5, addr="127.0.0.1", port=9999, rdns=True)
 	#socket.socket = socks.socksocket
 
 	#data = {
@@ -65,7 +65,7 @@ def http_post (hyperlink, params):
 	#print(text_res)
 
 
-	#text_res = http_get('http://localhost/')
+	#text_res = http_get('https://www.reddit.com/r/Minecraft/')
 	#print(text_res)
 
 
